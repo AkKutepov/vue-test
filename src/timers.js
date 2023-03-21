@@ -2,17 +2,11 @@ import { Lib } from './lib.js'
 
 export default {
   data() { return {
-    myName: this.$options.props.name,
-
     dS: { isEnabled: 0, processId: 0 },
     dT: [],
   }},
   
   mounted() {
-console.log(this.myName + ' mounted')
-
-    Lib.bus.trigger('Com:mounted', location.hash.substring(1));
-
     this.setStyle(this.$options, this.$el)
     this.$refs["timerInput"].select();
   },
@@ -25,12 +19,12 @@ console.log(this.myName + ' mounted')
       if((match = /60(:00)?|[0-5]?[0-9](:[0-5]0)?/.exec(s0)) != null) {
         s1 = match[0]
       }
-      // allow/not adding timer
-      this.dS.isEnabled = (s0 && s0 == s1 && s1.replace(/[:0]+/, ''))
+      // allow/not add timer
+      this.dS.isEnabled = (!!s0 && s0 == s1 && !!s1.replace(/[:0]+/, ''))
     },
     
     addTimer () {
-      if(!this.dS.isEnabled) return // not allow adding timer
+      if(!this.dS.isEnabled) return // not allow add timer
       
       // set new timer
       var ar = this.$refs["timerInput"].value.split(':'), // [min, sec]
@@ -38,11 +32,10 @@ console.log(this.myName + ' mounted')
           ar_T = { // new timer array set
             stop: now.getTime() + ar[0] * 60000 + (ar[1] ? ar[1] * 1000 : 0), // stop time (msec)
             m: ar[0], // min
-            s: ar[1] ? ar[1] : '00', // sec
-            ms: '000', // msec
+            s: ar[1] ? ar[1] : '', // sec
+            ms: '', // msec
             stopTime: '', // stop time viewing (' - 00:00:00')
           }
-      
       
       this.dT.push(ar_T) // add new timer
       this.$refs["timerInput"].select() // focus, select to inputbox
@@ -56,37 +49,33 @@ console.log(this.myName + ' mounted')
     
     // start all timers
     startTimers() {
-      var pad = this.pad // formating
-
+      var diff, // remaining time of the current timer
+          now, // current time
+          activeCount, // count of active timers
+          pad = this.pad // formating
+      
       this.dS.processId = setInterval(() => {
-        var i, 
-            diff, // remaining time of the current timer
-            timer, // current timer
-            now = new Date(), // current time
-            activeCount = this.dT.length // count of active timers
+        now = new Date()
+        activeCount = this.dT.length
 
-        for(i = this.dT.length; i--;) {
-          timer = this.dT[i]
-          diff = new Date(this.dT[i].stop - now.getTime());  
+        this.dT.map(timer => {
+          diff = new Date(timer.stop - now.getTime())
           
           if(diff > 0) {
           // active
-            timer.m = pad(diff.getMinutes()) // min
-            timer.s = pad(diff.getSeconds()) // sec
-            timer.ms = pad(diff.getMilliseconds(), 3) // msec
+            Object.assign(timer, { m: pad(diff.getMinutes()), s: pad(diff.getSeconds()), ms: pad(diff.getMilliseconds(), 3) })
           }
           else {
           // deactive
             if(!timer.stopTime) {
             // stop moment
-              timer.ms = '000' // msec
-              timer.stopTime = ' - ' + pad(now.getHours()) + ':' + 
-                pad(now.getMinutes()) + ':' + pad(now.getSeconds()) // view stop
+              Object.assign(timer, { ms: '000', stopTime: ' - ' + pad(now.getHours()) + ':' + 
+                pad(now.getMinutes()) + ':' + pad(now.getSeconds()) })
             }
             
             if(--activeCount == 0) { clearInterval(this.dS.processId); this.dS.processId = 0 } // idle mode
           }
-        }
+        })
       }, 10)
     },
     
@@ -100,9 +89,6 @@ console.log(this.myName + ' mounted')
   
   template: `
   <div id="my-timer-wrapper">
-    <h1>{{ myName }}</h1>
-    <p>This is {{ myName.toLowerCase() }} page</p>
-
     <div class="input-container">
       <div>Add timer (0 - 60min):</div>
       <div class="input-group">
@@ -122,7 +108,7 @@ console.log(this.myName + ' mounted')
       </div>
       
       <div v-for="(t, index) in dT">
-        #{{ index + 1 }} - {{ t.m }}:{{ t.s }}.{{ t.ms }}{{ t.stopTime }}
+        #{{ index + 1 }} - {{ t.m + ":" + t.s }}.{{ t.ms }}{{ t.stopTime }}
       </div>
     </div>
   </div>
@@ -130,8 +116,10 @@ console.log(this.myName + ' mounted')
 
   css: `
 <style scoped>
+  #my-timer-wrapper {
+    margin-left:2rem;
+  }
   #my-timer-wrapper .input-container {
-    margin-left:1rem;
     margin-top:2rem;
     text-align:left;
     max-width:14rem;
@@ -149,7 +137,7 @@ console.log(this.myName + ' mounted')
   }  
   #my-timer-wrapper .form-control {
     border: 1px solid #ced4da;
-    border-radius: .25rem;
+    border-radius: 0.25rem;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 
@@ -160,20 +148,20 @@ console.log(this.myName + ' mounted')
     margin-bottom: 0;
 
     display: block;
-    padding: .2rem .5rem;
+    padding: 0.2rem 0.5rem;
     font-size: .875rem;
     line-height: 1.5;
-    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     width: 100%;
     z-index:3;
   }
   #my-timer-wrapper .form-control:focus {
     border-color: #80bdff;
-    box-shadow: 0 0 0 .2rem rgb(0 123 255 / .25);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
     outline: 0;
   }
   #my-timer-wrapper .input-group-append {
-    padding: 0.3rem 0.5rem 0 .5rem;
+    padding: 0.3rem 0.5rem 0 0.5rem;
     background-color: #e9ecef;
     border:1px solid #ced4da;
     border-radius: 0.25rem;
@@ -188,5 +176,6 @@ console.log(this.myName + ' mounted')
     opacity: 1;
     pointer-events: auto;
   }
+</style>
 `
 }
