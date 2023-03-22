@@ -48,7 +48,7 @@ console.log(this.myName + ' mounted')
     },
     
     //
-    // Игра в города (вывод в консоль)
+    // Игра в города
     //
 
     // Есть список городов. Надо определить все возможные (1й возможный вариант) 
@@ -151,8 +151,9 @@ console.log(this.myName + ' mounted')
   <div id='my-cities-wrapper'>
     <h1>{{ myName }}</h1>
     <p>This is {{ myName.toLowerCase() }} page</p>
-    <textarea ref="input">
-Геленджик,
+    <br />
+    <p>Игра в города</p>
+    <textarea ref="input">Геленджик,
 Домодедово,
 Каунас,
 Актюбинск,
@@ -162,15 +163,14 @@ console.log(this.myName + ' mounted')
 Нижний Новгород,
 Орёл,
 Санкт-Петербург,
-Кустанай,
-    </textarea>
+Кустанай,</textarea>
     <div style="display:flex;justify-content:flex-end;">
       <button class='input-group-append'
         @click="cityGame" 
       >Start</button>
     </div>
     <p v-for="(c, index) in cities" style="text-align:justify;width:100%;">
-      #{{ index + 1 }} {{ c.res }}
+      #{{ index + 1 }} {{ c.res.join(', ') }}
     </p>
   </div>
 `,
@@ -186,7 +186,7 @@ console.log(this.myName + ' mounted')
     margin-bottom:1rem;
     outline: none;
     overflow: hidden;
-    padding: 1rem 2rem;
+    padding: 2rem;
     width:100%;
   }
   #my-cities-wrapper .input-group-append {
