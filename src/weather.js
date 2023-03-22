@@ -52,12 +52,13 @@ console.log(this.myName + ' updated')
   methods: {
     refreshData() {
       var ar, s = localStorage.getItem('trWeather') || '[]'
-      if(s != '[]') {
-        ar = JSON.parse(s).map(item => item.name + ', ' + item.country)
-        SELF.getWeather(ar)
-        return 1
-      }
-      return 0
+      if(s == '[]') s = '[{"name":"Havana","country":"CU"},{"name":"Dubai","country":"AE"}]'
+      // if(s != '[]') {
+      ar = JSON.parse(s).map(item => item.name + ', ' + item.country)
+      SELF.getWeather(ar)
+      return 1
+      // }
+      // return 0
     },
     settingMode() {
       SELF.data_SettingVisible = !SELF.data_SettingVisible;
