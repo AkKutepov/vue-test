@@ -1,12 +1,13 @@
 import home from './home.js'
 import timers from './timers.js'
+import cities from './cities.js'
 import share from './share.js'
 import offset from './offset.js' // () => Promise...
 
 var routes0 = [
   { name: 'Weather', path: '/', component: home, },
   { name: 'Timers', path: '/timers', component: timers, },
-  { name: 'Contacts', path: '/contacts', component: share, },
+  { name: 'Cities', path: '/contacts', component: cities, },
   { name: 'Offset', path: '/offset', component: offset, },
   { name: 'Dropdown', path: '/dropdown' },
   { name: 'Action', path: '/dropdown/', component: share, child: 1, },
@@ -21,7 +22,7 @@ var routes0 = [
 ]
 
 // add names
-export let routes = routes0.map(item => {
+export var routes = routes0.map(item => {
   if(item.component && item.component != offset) { // offset - () => promise
     item.component = { ...item.component, props:{ name: item.name }}
   }
