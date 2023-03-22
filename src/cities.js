@@ -178,7 +178,7 @@ console.log(this.myName + ' mounted')
   css: `
 <style scoped>
   #my-cities-wrapper {
-    padding:.5rem 2rem;
+    padding:0rem 2rem;
   }
   #my-cities-wrapper textarea {
     background: rgb(250 250 250 / 1);

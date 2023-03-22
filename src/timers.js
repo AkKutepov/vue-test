@@ -2,6 +2,7 @@ import { Lib } from './lib.js'
 
 export default {
   data() { return {
+    myName: this.$options.props.name,
     dS: { isEnabled: 0, processId: 0 },
     dT: [],
   }},
@@ -90,6 +91,9 @@ export default {
   
   template: `
   <div id="my-timer-wrapper">
+    <h1>{{ myName }}</h1>
+    <p>This is {{ myName.toLowerCase() }} page</p>
+    <br />
     <div class="input-container">
       <div>Add timer (0 - 60min):</div>
       <div class="input-group">
