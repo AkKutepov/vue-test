@@ -7,7 +7,7 @@ import offset from './offset.js' // () => Promise...
 var routes0 = [
   { name: 'Weather', path: '/', component: home, },
   { name: 'Timers', path: '/timers', component: timers, },
-  { name: 'Cities', path: '/contacts', component: cities, },
+  { name: 'Cities', path: '/cities', component: cities, },
   { name: 'Offset', path: '/offset', component: offset, },
   { name: 'Dropdown', path: '/dropdown' },
   { name: 'Action', path: '/dropdown/', component: share, child: 1, },

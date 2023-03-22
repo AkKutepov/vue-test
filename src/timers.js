@@ -9,6 +9,7 @@ export default {
   mounted() {
     this.setStyle(this.$options, this.$el)
     this.$refs["timerInput"].select();
+    Lib.bus.trigger('Com:mounted', location.hash.substring(1))
   },
 
   methods: {

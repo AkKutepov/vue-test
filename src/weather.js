@@ -31,6 +31,7 @@ console.log(this.myName + ' mounted')
     SELF = this
     OBJ.div = SELF.$el
     Lib.style(SELF.$options, OBJ.div)
+    Lib.bus.trigger('Com:mounted', location.hash.substring(1))
     
     if(!SELF.refreshData()) {
       SELF.data_SettingVisible = 1;
