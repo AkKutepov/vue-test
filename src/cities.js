@@ -165,7 +165,7 @@ console.log(this.myName + ' mounted')
 Санкт-Петербург,
 Кустанай,</textarea>
     <div style="display:flex;justify-content:flex-end;">
-      <button class='input-group-append'
+      <button class='input-button'
         @click="cityGame" 
       >Start</button>
     </div>
@@ -189,7 +189,7 @@ console.log(this.myName + ' mounted')
     padding: 2rem;
     width:100%;
   }
-  #my-cities-wrapper .input-group-append {
+  #my-cities-wrapper .input-button {
     display:block;
     padding: 0.3rem 0.5rem;
     background-color: #e9ecef;
@@ -199,6 +199,10 @@ console.log(this.myName + ' mounted')
     outline:none;
     margin-bottom:2rem;
     width:20rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  }
+  #my-cities-wrapper .input-button:active {
+    box-shadow:none;
   }
 </style>
 `
