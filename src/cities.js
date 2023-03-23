@@ -33,6 +33,7 @@ console.log(this.myName + ' mounted')
         text.style.height = 'auto';
         text.style.height = text.scrollHeight + 'px';
       }
+      
       /* 0-timeout to get the already changed text */
       function delayedResize () {
         window.setTimeout(resize, 0);
