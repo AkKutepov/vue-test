@@ -37,7 +37,6 @@ console.log(this.myName + ' mounted')
       SELF.data_SettingVisible = 1;
     }
   },
-  
   updated() {
 console.log(this.myName + ' updated')
 
