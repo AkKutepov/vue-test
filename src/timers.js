@@ -5,6 +5,7 @@ export default {
     myName: this.$options.props.name,
     dS: { isEnabled: 0, processId: 0 },
     dT: [],
+    inputValue: '00:00',
   }},
   
   mounted() {
@@ -29,7 +30,8 @@ export default {
       if(!this.dS.isEnabled) return // not allow add timer
       
       // set new timer
-      var ar = this.$refs["timerInput"].value.split(':'), // [min, sec]
+      // var ar = this.$refs["timerInput"].value.split(':'), // [min, sec]
+      var ar = this.inputValue.split(':'), // [min, sec]
           now = new Date(), // current date, time
           ar_T = { // new timer array set
             stop: now.getTime() + ar[0] * 60000 + (ar[1] ? ar[1] * 1000 : 0), // stop time (msec)
@@ -97,7 +99,7 @@ export default {
     <div class="input-container">
       <div>Add timer (0 - 60min):</div>
       <div class="input-group">
-        <input type="text" class="form-control" value="00:00" ref="timerInput"
+        <input type="text" class="form-control" v-model="inputValue" ref="timerInput"
           @keydown.enter="addTimer"
           @input="timerOnInput"
         >
