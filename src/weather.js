@@ -11,6 +11,7 @@ var weather = {
     data_W: [],
     data_ViewVisible: 0,
     data_SettingVisible: 0,
+    inputValue: '',
   }},
   
   created() {    
@@ -69,18 +70,17 @@ console.log(this.myName + ' updated')
         s1 = match[0];
       }
       if(s0 != s1) {
-        event.target.value = s1
+        this.inputValue = s1
       }
     },
     addCityOnEnter(event) {
-      var elem = event.target.closest('.input-group').querySelector('input'),
-          s = elem.value
+      var s = this.inputValue
           
       if(s.length > 2) {
         // s = s.split(',').map(item => item.trim()).join(',')
         s = s.toLowerCase()      
         SELF.getWeather([s])        
-        elem.select()
+        this.$refs['input'].select()
       }
     },
     
@@ -467,7 +467,7 @@ console.log(this.myName + ' updated')
         <div class="input-container">
           <div>Add location:</div>
           <div class="input-group input-group-sm mb-3">
-            <input 
+            <input v-model="inputValue" ref="input"
               @input="cityOnInput"
               @keydown.enter="addCityOnEnter"
               type="text" class="form-control"
