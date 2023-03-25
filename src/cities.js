@@ -4,6 +4,17 @@ export default {
   data() { return {
     myName: this.$options.props.name,
     cities: [],
+    inputValue: `Геленджик,
+Домодедово,
+Каунас,
+Актюбинск,
+Казань,
+Йошкар-ола,
+Липецк,
+Нижний Новгород,
+Орёл,
+Санкт-Петербург,
+Кустанай,`,
   }},
   
   mounted() {
@@ -63,7 +74,7 @@ console.log(this.myName + ' mounted')
           ar_res = [], // result array
           res_count = 0, // count of variants
           all_variants = 1,
-          ar_cities = this.$refs["input"].value.trim().replace(/[, ]$/, '').split(","),
+          ar_cities = this.inputValue.trim().replace(/[, ]$/, '').split(","),
           count = ar_cities.length, // cities count
           SELF = this
 
@@ -154,17 +165,7 @@ console.log(this.myName + ' mounted')
     <p>This is {{ myName.toLowerCase() }} page</p>
     <br />
     <p>Игра в города</p>
-    <textarea ref="input">Геленджик,
-Домодедово,
-Каунас,
-Актюбинск,
-Казань,
-Йошкар-ола,
-Липецк,
-Нижний Новгород,
-Орёл,
-Санкт-Петербург,
-Кустанай,</textarea>
+    <textarea v-model="inputValue" ref="input"></textarea>
     <div style="display:flex;justify-content:flex-end;">
       <button class='input-button'
         @click="cityGame" 
