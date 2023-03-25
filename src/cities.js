@@ -65,7 +65,7 @@ console.log(this.myName + ' mounted')
 
     // Есть список городов. Надо определить все возможные (1й возможный вариант) 
     // построения цепочки для игры в города
-
+    //
     // ar_cities - cities array
     // all_variants - 0 (get first variant), 1 (get all varaints)
     // return variants and count of variants
