@@ -1,9 +1,10 @@
 import { Lib } from './lib.js'
 
 export default {
+
   data() { return {
     myName: this.$options.props.name,
-    dS: { isEnabled: 0, processId: 0 },
+    dS: { isEnabled: 0, },
     dT: [],
     inputValue: '00:00',
   }},
@@ -12,6 +13,7 @@ export default {
     this.setStyle(this.$options, this.$el)
     this.$refs["timerInput"].select();
     Lib.bus.trigger('Com:mounted', location.hash.substring(1))
+    this.processId = 0;
   },
 
   methods: {
@@ -30,7 +32,6 @@ export default {
       if(!this.dS.isEnabled) return // not allow add timer
       
       // set new timer
-      // var ar = this.$refs["timerInput"].value.split(':'), // [min, sec]
       var ar = this.inputValue.split(':'), // [min, sec]
           now = new Date(), // current date, time
           ar_T = { // new timer array set
@@ -43,7 +44,7 @@ export default {
       
       this.dT.push(ar_T) // add new timer
       this.$refs["timerInput"].select() // focus, select to inputbox
-      if(this.dS.processId == 0) this.startTimers() // start all timers if idle
+      if(this.processId == 0) this.startTimers() // start all timers if idle
     },
     
     // pad "0" from left
@@ -58,7 +59,7 @@ export default {
           activeCount, // count of active timers
           pad = this.pad // formating
       
-      this.dS.processId = setInterval(() => {
+      this.processId = setInterval(() => {
         now = new Date()
         activeCount = this.dT.length
 
@@ -77,7 +78,7 @@ export default {
                 pad(now.getMinutes()) + ':' + pad(now.getSeconds()) })
             }
             
-            if(--activeCount == 0) { clearInterval(this.dS.processId); this.dS.processId = 0 } // idle mode
+            if(--activeCount == 0) { clearInterval(this.processId); this.processId = 0 } // idle mode
           }
         })
       }, 10)
