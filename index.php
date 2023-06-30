@@ -24,7 +24,7 @@
     <div id="app"><Navbar /></div>
     
     <!--+->
-    <script src="./dist/com/weather.js"></script>
+    <script src="./dist/weather.js"></script>
     <script src="./dist/bundle.js"></script>
     <!---->
 
