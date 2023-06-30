@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Vue Example</title>
 
-    <!---->
+    <!--+->
     <link rel="stylesheet" href="./css/bootstrap.css"> <!-- 4.6.2 -->
     <!---->
     <link rel="stylesheet" href="./css/main.css">
@@ -20,11 +20,12 @@
   <body>
     <div id="app"><Navbar /></div>
     
-    <!--+->
+    <!---->
     <script src="./dist/com/weather.js"></script>
-    <!--+->
     <script src="./dist/bundle.js"></script>
     <!---->
+
+    <!--+->
     <script type='module'>
       import './src/weather.js'
       import "./src/main.js"

@@ -1,29 +1,21 @@
-import home from './home.js'
+import weatherWrapper from './weather-wrapper.js'
+import share from './share.js'
 import timers from './timers.js'
 import cities from './cities.js'
-import share from './share.js'
-import offset from './offset.js' // () => Promise...
+import paginators from './paginators.js' // () => Promise...
 
 var routes0 = [
-  { name: 'Weather', path: '/', component: home, },
+  { name: 'Weather', path: '/', component: weatherWrapper, },
   { name: 'Timers', path: '/timers', component: timers, },
   { name: 'Cities', path: '/cities', component: cities, },
-  { name: 'Offset', path: '/offset', component: offset, },
+  { name: 'Paginators', path: '/paginators', component: paginators, },
   { name: 'Dropdown', path: '/dropdown' },
   { name: 'Action', path: '/dropdown/', component: share, child: 1, },
-  { name: 'Another action', path: '/dropdown/', component: share, child: 1, },
-  { name: 'Something else here', path: '/dropdown/timers', component: timers, child: 1, },
-  { name: 'Separated link', path: '/dropdown/', component: share, child: 1, separated: 1, },
-  { name: 'Dropdown1', path: '/dropdown1' },
-  { name: 'Action1', path: '/dropdown1/timers', component: timers, child: 1, },
-  { name: 'Another action1', path: '/dropdown1/offset', component: offset, child: 1, },
-  { name: 'Something else here1', path: '/dropdown1/timers', component: timers, child: 1, },
-  { name: 'Separated link1', path: '/dropdown1/', component: share, child: 1, separated: 1, },
 ]
 
 // add names
 export var routes = routes0.map(item => {
-  if(item.component && item.component != offset) { // offset - () => promise
+  if(item.component && item.component != paginators) { // paginators - async
     item.component = { ...item.component, props:{ name: item.name }}
   }
   return item

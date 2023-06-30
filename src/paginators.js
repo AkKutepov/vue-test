@@ -1,8 +1,7 @@
 import { Lib } from './lib.js'
 
 var SELF
-export default () =>
-  Promise.resolve({
+export default () => Promise.resolve({
     
 // export default {
   
@@ -99,10 +98,10 @@ console.log(index, target.innerHTML);
   },
 
   template: `
-<div id='Offset'>
+<div id='paginators'>
   <div>
     <h1>{{ myName }}</h1>
-    <p>This is {{ myName }} page</p>
+    <p>This is {{ myName.toLowerCase() }} page</p>
   </div>
   <div v-for="ul in AR.data.ul" class='li_buttons'><ul @click="f_ul_onclick(ul.num - 1)" :data-current=ul.current>
     <li v-for="li in ul.li">{{ li }}</li>
@@ -112,16 +111,16 @@ console.log(index, target.innerHTML);
   css: `
 <style scoped>
   :root {
-    --offset-base-scale:calc(100vw / 75);
-    --offset-font-size:max(calc(15px * .7), min(calc(15px * .9), calc(var(--offset-base-scale) * .9)));
-    --offset-transparent-button-background-hover:rgb(240 240 240 / 1);
-    --offset-transparent-button-background-active:rgb(220 220 220 / 1);
-    --offset-transparent-button-background-active1:rgb(200 200 200 / 1);
+    --paginators-base-scale:calc(100vw / 75);
+    --paginators-font-size:max(calc(15px * .7), min(calc(15px * .9), calc(var(--paginators-base-scale) * .9)));
+    --paginators-transparent-button-background-hover:rgb(240 240 240 / 1);
+    --paginators-transparent-button-background-active:rgb(220 220 220 / 1);
+    --paginators-transparent-button-background-active1:rgb(200 200 200 / 1);
   }
 
-  #Offset {
+  #paginators {
     font-family:Arial, Helvetica, sans-serif;
-    font-size:calc(var(--offset-font-size) * 1.4);
+    font-size:calc(var(--paginators-font-size) * 1.4);
     position:relative;
     width:100%;
   }
@@ -154,7 +153,7 @@ console.log(index, target.innerHTML);
     position: absolute;
   }
   .li_buttons li { 
-    background:var(--offset-transparent-button-background-hover);
+    background:var(--paginators-transparent-button-background-hover);
     border-radius:50%;
     cursor:pointer;
     display:inline-block;
@@ -170,16 +169,16 @@ console.log(index, target.innerHTML);
     width:2.5em;
   }
   .li_buttons li:hover {
-    background:var(--offset-transparent-button-background-active);    
+    background:var(--paginators-transparent-button-background-active);    
   }
   .li_select {
-    background:var(--offset-transparent-button-background-active1) !important;    
+    background:var(--paginators-transparent-button-background-active1) !important;    
     cursor:default !important;
   }
 
   @media (max-width: 880px) {
     :root {
-      --offset-font-size:max(calc(15px * .8), min(calc(15px * 1.3), calc(var(--offset-base-scale) * 1.3)));
+      --paginators-font-size:max(calc(15px * .8), min(calc(15px * 1.3), calc(var(--paginators-base-scale) * 1.3)));
     }
     .li_buttons {
       width:65%;
