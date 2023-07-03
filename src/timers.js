@@ -96,11 +96,11 @@ export default {
   <div id="my-timer-wrapper">
     <h1>{{ myName }}</h1>
     <p>This is {{ myName.toLowerCase() }} page</p>
-    <br />
+    
     <div class="input-container">
       <div>Add timer (0 - 60min):</div>
       <div class="input-group">
-        <input type="text" class="form-control" v-model="inputValue" ref="timerInput"
+        <input type="text" class="form-control1" v-model="inputValue" ref="timerInput"
           @keydown.enter="addTimer"
           @input="timerOnInput"
         >
@@ -124,13 +124,14 @@ export default {
 
   css: `
 <style scoped>
-  #my-timer-wrapper {
+  /* #my-timer-wrapper {
     margin-left:2rem;
-  }
+  } */
   #my-timer-wrapper .input-container {
-    margin-top:2rem;
-    text-align:left;
-    max-width:14rem;
+    margin-left: 1rem;
+    margin-top: 2rem;
+    text-align: left;
+    max-width: 14rem;
   }
   #my-timer-wrapper .input-group {
     display: -webkit-box;
@@ -143,7 +144,7 @@ export default {
     margin-top:.2rem;
     margin-bottom:1rem;
   }  
-  #my-timer-wrapper .form-control {
+  #my-timer-wrapper .form-control1 {
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     border-top-right-radius: 0;
@@ -163,13 +164,13 @@ export default {
     width: 100%;
     z-index:3;
   }
-  #my-timer-wrapper .form-control:focus {
+  #my-timer-wrapper .form-control1:focus {
     border-color: #80bdff;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
     outline: 0;
   }
   #my-timer-wrapper .input-group-append {
-    padding: 0.3rem 0.5rem 0 0.5rem;
+    padding: .15rem 0.5rem .15rem 0.5rem;
     background-color: #e9ecef;
     border:1px solid #ced4da;
     border-radius: 0.25rem;
