@@ -23,12 +23,12 @@
   <body>
     <div id="app"><Navbar /></div>
     
-    <!---->
+    <!--+->
     <script src="./dist/weather.js"></script>
     <script src="./dist/bundle.js"></script>
     <!---->
 
-    <!--+->
+    <!---->
     <script type='module'>
       import './src/weather.js'
       import "./src/main.js"
