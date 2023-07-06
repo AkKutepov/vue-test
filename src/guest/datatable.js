@@ -340,7 +340,7 @@ css: `
 }
 
 #my-datatable .table-view tbody tr {
-  transition: font-size .3s ease;
+  transition: font-size .3s ease, line-height .3s ease;
 }
 #my-datatable .table-view tbody tr.notransition {
   transition: none;
@@ -349,7 +349,6 @@ css: `
   font-size: 0;
   line-height: 0;
 }
-/* #my-datatable .table-view tbody td.collapsed { */
 #my-datatable .table-view tbody tr.collapsed > td {
   border-width: 0;
   padding-top: 0;
