@@ -8,12 +8,6 @@ export default {
     OBJ: {}, // data other
   }},
 
-  directives: {
-    key: {
-      inserted: function (el) {}
-    }
-  },
-
   created() {
     // console.log(this.$options.name + ' start')
         
