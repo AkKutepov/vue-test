@@ -23,10 +23,11 @@ export default {
     this.OBJ.sortDirection = 0
 
     // hdata, data
-    this.AR.hdata = { title: this.name, ready: 0, }
+    this.AR.hdata = { ready: 0, }
     this.AR.data = localStorage.getItem('dataTableState') || ''
     if(this.AR.data) { 
       this.AR.data = JSON.parse(this.AR.data)
+
       if(this.AR.data.length) {
         this.AR.dataSort = this.AR.data.slice() // copy
         this.dataColumns() // prepare columns array
@@ -160,9 +161,9 @@ export default {
       })
     },
 
-    binOnClick(event) {
+    binOnClick() {
       var i
-      , target = event.currentTarget
+      , target = event.target || event.srcElement
       , tr = target.closest('tr')
       , tdKey = tr.querySelector('td[my-key]')
       
@@ -224,14 +225,14 @@ export default {
 
       <tbody>
         <tr v-for="row in AR.dataSort" :class="{ 'collapsed': row.collapsed, notransition: AR.hdata.notransition }">
-          <td my-key :class="{ 'collapsed': row.collapsed }">{{ row.rank }}</td>
-          <td :class="{ 'collapsed': row.collapsed }">{{ row.id }}</td>
-          <td :class="{ 'collapsed': row.collapsed }">{{ row.symbol }}</td>
-          <td :class="{ 'collapsed': row.collapsed }">{{ row.name }}</td>
-          <td :class="{ 'collapsed': row.collapsed }" style="text-align:right;padding-right:2rem;">{{ row.supply }}</td>
-          <td :class="{ 'collapsed': row.collapsed }">
+          <td my-key>{{ row.rank }}</td>
+          <td>{{ row.id }}</td>
+          <td>{{ row.symbol }}</td>
+          <td>{{ row.name }}</td>
+          <td style="text-align:right;padding-right:2rem;">{{ row.supply }}</td>
+          <td>
             <div>
-              <svg @click="binOnClick($event)" viewBox="0 0 18 18"><use href="#my-datatable_bin"></use></svg>
+              <svg @click="binOnClick" viewBox="0 0 18 18"><use href="#my-datatable_bin"></use></svg>
             </div>
           </td>
         </tr>
@@ -354,7 +355,8 @@ css: `
   font-size: 0;
   line-height: 0;
 }
-#my-datatable .table-view tbody td.collapsed {
+/* #my-datatable .table-view tbody td.collapsed { */
+#my-datatable .table-view tbody tr.collapsed > td {
   border-width: 0;
   padding-top: 0;
   padding-bottom: 0;
