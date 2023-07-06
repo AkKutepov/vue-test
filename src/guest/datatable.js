@@ -36,7 +36,7 @@ export default {
   mounted() {
     console.log(this.NAME + ' mounted')
     
-    Lib.style(this.$options, this.$el)
+    Lib.style(this.$options, this.$el, 1)
     // highlight, view
     Lib.bus.trigger('Com:mounted', location.hash.substring(1));
 
