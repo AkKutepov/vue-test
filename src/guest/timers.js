@@ -1,4 +1,4 @@
-import { Lib } from './lib.js'
+import { Lib } from '../lib.js'
 
 export default {
 

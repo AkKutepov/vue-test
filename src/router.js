@@ -1,8 +1,9 @@
-import weatherWrapper from './weather-wrapper.js'
-import share from './share.js'
-import timers from './timers.js'
-import cities from './cities.js'
-import paginators from './paginators.js' // () => Promise...
+import cities from './guest/cities.js'
+import datatable from './guest/datatable.js'
+import timers from './guest/timers.js'
+import paginators from './guest/paginators.js' // () => Promise...
+import share from './guest/share.js'
+import weatherWrapper from './guest/weather-wrapper.js'
 
 var routes0 = [
   { name: 'Weather', path: '/', component: weatherWrapper, },
@@ -10,7 +11,8 @@ var routes0 = [
   { name: 'Cities', path: '/cities', component: cities, },
   { name: 'Paginators', path: '/paginators', component: paginators, },
   { name: 'Dropdown', path: '/dropdown' },
-  { name: 'Action', path: '/dropdown/', component: share, child: 1, },
+  { name: 'Datatable', path: '/dropdown/datatable', component: datatable, child: 1, },
+  { name: 'Nothing', path: '/dropdown/nothing', component: share, child: 1, },
 ]
 
 // add names

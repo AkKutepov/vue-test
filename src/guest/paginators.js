@@ -1,9 +1,7 @@
-import { Lib } from './lib.js'
+import { Lib } from '../lib.js'
 
 var SELF
 export default () => Promise.resolve({
-    
-// export default {
   
   data() { return {
     // myName: this.$options.props.name,
