@@ -34,12 +34,14 @@ console.log(this.myName + ' mounted')
         element.addEventListener(event, handler, false)
       }
     }
+    
     this.init()
   },
 
   methods: {
     init() {
       var text = this.$refs['input']
+
       function resize () {
         text.style.height = 'auto';
         text.style.height = text.scrollHeight + 'px';
@@ -47,16 +49,15 @@ console.log(this.myName + ' mounted')
       
       /* 0-timeout to get the already changed text */
       function delayedResize () {
-        window.setTimeout(resize, 0);
+        setTimeout(resize, 0);
       }
-      this.observe(text, 'change',  resize);
-      this.observe(text, 'cut',     delayedResize);
-      this.observe(text, 'paste',   delayedResize);
-      this.observe(text, 'drop',    delayedResize);
-      this.observe(text, 'keydown', delayedResize);
+
+      Lib.listenon(text, 'change',  resize)
+      Lib.addListeners(text, ['cut', 'paste', 'drop', 'keydown'], delayedResize)
+
       // text.focus();
       // text.select();
-      resize();
+      delayedResize();
     },
     
     //
