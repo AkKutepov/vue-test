@@ -73,9 +73,6 @@ export default {
         elems[i].classList.remove('nav-link-active')
       }
     },
-    f_menuitem_onclick() {
-      this.f_menusubitem_onclick()
-    },
     f_dropdown_onclick(event, ul, b_collapse) {
       var target, elem;
       if(event) {
@@ -92,9 +89,6 @@ export default {
       if(!b_collapse) elem.classList.toggle('expand')
       else elem.classList.remove('expand')
     },
-    f_menusubitem_onclick() {
-      // this.f_collapse_all()
-    },
     f_win_ondragstart() {
       event.preventDefault()
     },
@@ -104,7 +98,7 @@ export default {
 <div class="container-fluid">
   <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
     <a class="navbar-brand" nohref style="cursor:default;">
-      <img alt="logo" src="/test/img/favicon.png" height="40" style="" />
+      <img alt="logo" src="/test/img/favicon.png" height="40" />
     </a>
     <button @click="f_menu_onclick" class="navbar-toggler" type="button">
       <span class="navbar-toggler-icon"></span>
@@ -118,12 +112,12 @@ export default {
               <ul class="dropdown-menu-inner">
                 <template v-for="subitem in obj.data">
                   <div v-if="subitem.separated" class="dropdown-divider"></div>
-                  <li class="dropdown-item"> <router-link @click.native.stop="f_menusubitem_onclick" :to="subitem.path" class="nav-link"> {{ subitem.name }} </router-link> </li>
+                  <li class="dropdown-item"> <router-link :to="subitem.path" class="nav-link"> {{ subitem.name }} </router-link> </li>
                 </template>
               </ul>
             </div>
           </li>
-          <li v-else @click.stop="f_menuitem_onclick"> <router-link :to="obj.item.path" class="nav-link"> {{ obj.item.name }} </router-link> </li>
+          <li v-else> <router-link :to="obj.item.path" class="nav-link"> {{ obj.item.name }} </router-link> </li>
         </template>
       </ul>
     </div>
@@ -141,16 +135,19 @@ export default {
     margin:0;
     padding:0;
     overflow-y:scroll;
-  }  
+  }
   body::-webkit-scrollbar {
     width: 12px;
-    background: -webkit-gradient(linear, 0% 0%, 100% 0%, from(rgba(245,245,245,1)), to(#cfcab9));
-    -webkit-border-radius:6px;
+  }
+  body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
   }
   body::-webkit-scrollbar-thumb {
-    background:-webkit-gradient(linear, 0% 0%, 100% 0%, from(rgba(245,245,245,1)), to(#7f7a6a));
-    -webkit-border-radius:6px;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
   }
+
   .container-fluid {
     padding-left: 0;
     padding-right: 0;
@@ -167,9 +164,9 @@ export default {
   }
   
   .navbar {
-    user-select: none;
     border: 1px solid #dee2e6;
     border-radius: 6px;
+    user-select: none;
   }
   .navbar-brand {
     cursor: default;
