@@ -103,7 +103,9 @@ export default {
 	template: `
 <div class="container-fluid">
   <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
-    <a class="navbar-brand" href="#" @click.stop.prevent="" style='cursor:default;'>Nav</a>
+    <a class="navbar-brand" nohref style="cursor:default;">
+      <img alt="logo" src="/test/img/favicon.png" height="40" style="" />
+    </a>
     <button @click="f_menu_onclick" class="navbar-toggler" type="button">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -132,6 +134,7 @@ export default {
   </div>
 </div>
   `,
+
   css: `
 <style scoped>
   body {
@@ -164,11 +167,18 @@ export default {
   }
   
   .navbar {
-    -ms-user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
+    user-select: none;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
   }
+  .navbar-brand {
+    cursor: default;
+    margin-right: 0.5rem;
+    margin-bottom: 0.2rem;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
   .navbar > button:focus {
     outline: 1px solid var(--orange);
   }
