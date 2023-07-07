@@ -170,7 +170,8 @@ export default {
     outline: 0;
   }
   #my-timer-wrapper .input-group-append {
-    padding: .15rem 0.5rem .15rem 0.5rem;
+    padding: 0.3rem 0.5rem 0 .5rem;
+    /* padding: .15rem 0.5rem .15rem 0.5rem; */
     background-color: #e9ecef;
     border:1px solid #ced4da;
     border-radius: 0.25rem;
@@ -185,6 +186,9 @@ export default {
     opacity: 1;
     pointer-events: auto;
   }
-</style>
+  #my-timer-wrapper svg {
+    vertical-align: inherit;
+  }
+  </style>
 `
 }

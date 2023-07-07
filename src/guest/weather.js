@@ -692,6 +692,10 @@ console.log(this.myName + ' updated')
     border-bottom-left-radius: 0;
     margin-left: -1px;
   }
+  #my-datatable .table-view svg {
+    vertical-align: inherit;
+  }  
+
 </style>
 `
 }
