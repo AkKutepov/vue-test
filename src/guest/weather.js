@@ -79,7 +79,7 @@ console.log(this.myName + ' updated')
       if(s.length > 2) {
         // s = s.split(',').map(item => item.trim()).join(',')
         s = s.toLowerCase()      
-        SELF.getWeather([s])        
+        SELF.getWeather([s], 1)        
         this.$refs['input'].select()
       }
     },
@@ -147,16 +147,8 @@ console.log(this.myName + ' updated')
         // get index of city
         OBJ.cityMovedIndex = SELF.getIndex(elem)
         
-        var boundsC = target.getBoundingClientRect(),
-            boundsP = target.parentNode.getBoundingClientRect()
-            
-        if(event.type == 'touchstart') {
-          var touch = event.touches[0] || event.changedTouches[0];
-          OBJ.offsetY = boundsC.height * 3 / 4 + (boundsC.y - boundsP.y)
-        }
-        else if(event.type == 'mousedown') {
-          OBJ.offsetY = event.offsetY + (boundsC.y - boundsP.y)
-        }
+        var boundsP = target.parentNode.getBoundingClientRect()
+        OBJ.offsetY = boundsP.height / 2
       }
       else if(target.dataset.name == 'bin' || target.parentNode.dataset.name == 'bin') {
         var i, elem = target.closest('.city'),
@@ -180,8 +172,8 @@ console.log(this.myName + ' updated')
       if(event) event.preventDefault()
 
       if(OBJ.cityMoved) {
-        var elem = OBJ.cityMoved, elems = OBJ.div.querySelectorAll('.city'),
-            mouse = {}, container = OBJ.cityMoved.closest('.city-container')
+        var elem = OBJ.cityMoved
+        , mouse = {}
         
         if(event.type == 'touchmove') {
           var touch = event.touches[0] || event.changedTouches[0]
@@ -191,16 +183,10 @@ console.log(this.myName + ' updated')
           mouse.y = event.pageY - OBJ.bounds.top - document.documentElement.scrollTop
         }
                 
-        var elem_array = [...elems],
-            cur_index = elem_array.findIndex(item => item == elem)
-        
-// console.log(mouse.y, OBJ.offsetY, elem.offsetHeight)      
-
         if(mouse.y - OBJ.offsetY + elem.offsetHeight < OBJ.bounds.height &&
           mouse.y - OBJ.offsetY > 0) {
           
-          var top = mouse.y - OBJ.offsetY,
-            cur = OBJ.cityMoved,
+          var cur = OBJ.cityMoved,
             prev = cur.previousElementSibling,
             next = cur.nextElementSibling;
           
@@ -235,9 +221,12 @@ console.log(this.myName + ' updated')
           h = elems[i].offsetTop + elems[i].offsetHeight
         }
       }
+
       elem = OBJ.div.querySelector('.city-container')
-      elem.style.maxHeight = h + 'px'
-      if(elem.offsetHeight < h) elem.style.height = h + 'px'
+      if(elem) {
+        elem.style.maxHeight = h + 'px'
+        if(elem.offsetHeight < h) elem.style.height = h + 'px'
+      }
     },
     ms2kmh(speed) {
       return speed * 3600 / 1000;
@@ -285,47 +274,41 @@ console.log(this.myName + ' updated')
       return string.charAt(0).toUpperCase() + string.slice(1)
     },
     
-    getWeather(cities) {
+    getWeather(cities, once) {
       var w_data = []
       
       if(OBJ.refreshTimeout) clearTimeout(OBJ.refreshTimeout)
-      OBJ.refreshTimeout = setTimeout(() => {
-        SELF.refreshData()
-      }, 30 * 60 * 1000) // 30 min
+      OBJ.refreshTimeout = setTimeout(() => { SELF.refreshData() }, 30 * 60 * 1000) // 30 min
       
+      // start
       if(cities.length) fn(0)
-          
-      function fn(i) {
+      
       // get city weather
-        var bar = function(n) {
-          console.log(1, n)
-          console.log(123)
-          return 8
-        };
+      function fn(i) {
 
         var url = 'https://api.openweathermap.org/data/2.5/weather?q=' + cities[i] + '&limit=5&appid=65d3d0a48fb24bcee34d1d3c38ff4d4c'
+        // var url = 'https://api.openweathermap.org/data/2.5/weather?q=' + cities[i] + '&limit=5&appid=c71fd58fb1cd339ac9c1d8d5237ef3da'
         //
-        Lib.fetchReq(url, null, { method: 'GET', headers: null })
+        fetch(url, { method: 'GET' })
+        .then(res => { return res.ok ? res.json() : Promise.reject('Error: ' + res.status || res.statusText) })
         .then(res => getData(res))
+        .catch(err => { if(err == 'Error: 404') alert('Not Found'); else console.log(err)})
           
         function getData(data) {
           // console.log(data)
    
-          w_data[i++] = data
+          w_data[i] = data
           //
-          if(w_data[i - 1].local_name && w_data[i - 1].local_name.en) {
-            w_data[i - 1].name = w_data[i - 1].local_name.en
+          if(w_data[i].local_name && w_data[i].local_name.en) {
+            w_data[i].name = w_data[i].local_name.en
           }
           //
-          if(i == cities.length) { 
+          if(++i == cities.length) { 
             SELF.data_ViewVisible = 1; 
             
             // weather data
-            if(cities.length != 1 || (SELF.data_W.length == 1 && 
-                (SELF.data_W[0].name == w_data[0].name && 
-                SELF.data_W[0].sys.country == w_data[0].sys.country))) {
-              
-                SELF.data_W = w_data; // replace
+            if(!once) {
+              SELF.data_W = w_data; // replace
             }
             else {
               // find doubles
@@ -341,7 +324,6 @@ console.log(this.myName + ' updated')
                 }
               }))) {
               // not found
-
                 SELF.data_W.push(...w_data); // add
               }
               else {
@@ -426,7 +408,7 @@ console.log(this.myName + ' updated')
       </div>
       <div class="card-body text-dark">
       
-        <div v-if="data_ViewVisible" class="city-container"
+        <div v-if="data_ViewVisible" class="city-container transition"
           @mousedown="cityOnMousedown" 
           @mousemove="cityOnMousemove" 
           @touchstart="cityOnMousedown" 
@@ -600,17 +582,15 @@ console.log(this.myName + ' updated')
   }
   #my-weather-wrapper .city-container {
     position:relative;
-    transition:max-height .25s linear .25s;
-    
-    -ms-user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
+    user-select: none;
   }
+  #my-weather-wrapper .city-container.transition {
+    transition:max-height .25s linear .25s;
+  }
+
   #my-weather-wrapper .city {
     background:rgb(240 240 240 / 1);
     border-radius:.2rem;
-    /* box-sizing: border-box; */
     display:flex;
     justify-content: space-between;
     align-items: center;
@@ -618,7 +598,7 @@ console.log(this.myName + ' updated')
     padding:.2rem .4rem .3rem .4rem;
     position:absolute;
     width:100%;
-    transition:opacity .25s linear 0s;
+    transition:opacity .25s linear;
   }
   
   *, *::before, *::after {
