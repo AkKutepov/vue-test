@@ -108,7 +108,7 @@ console.log(this.myName + ' updated')
         index = SELF.getIndex(elem)
         elem.style.zIndex = 'inherit'
         elem.style.opacity = 1
-        OBJ.cityMoved.style.cursor = 'pointer';
+        OBJ.cityMoved.style.cursor = 'inherit';
         OBJ.cityMoved = null
         SELF.orderCities()
         
